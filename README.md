@@ -33,7 +33,7 @@ FireMock.enabled(true)
 
 ### Implement FireMockProtocol
 
-For example if you have a service which fetch news with multiple possible responses :
+For example if you have a service to fetch news with multiple possible responses :
 
 ```
 enum NewsMock: FireMockProtocol {
