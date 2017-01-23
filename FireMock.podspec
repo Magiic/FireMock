@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "FireMock"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "FireMock help to build mock. Test your apps with fake response data and files."
 
   # This description is used to generate tags and improve search results.
@@ -56,7 +56,7 @@ Pod::Spec.new do |s|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, "8.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
