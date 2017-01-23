@@ -74,7 +74,7 @@ if FireMock.isEnabled {
   configuration.protocolClasses?.insert(FireURLProtocol.self as AnyClass, at: 0)
 }
 let manager = SessionManager(configuration: configuration)
-``
+```
 
 ## License
 
