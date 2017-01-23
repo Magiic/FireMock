@@ -70,7 +70,7 @@ public struct FireMock {
     /// Dictionary mocks added.
     private static var mocks: [URL: ConfigMock] = [:]
     
-    private(set) static var isEnabled: Bool = false
+    public private(set) static var isEnabled: Bool = false
     
     
     /// Register a FireMockProtocol used for a specific URL when request is fired.

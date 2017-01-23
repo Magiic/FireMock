@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "FireMock"
-  s.version      = "1.0.2"
+  s.version      = "1.0.3"
   s.summary      = "FireMock help to build mock. Test your apps with fake response data and files."
 
   # This description is used to generate tags and improve search results.
@@ -72,7 +72,7 @@ Pod::Spec.new do |s|
   #
 
   # s.source       = { :git => ".", :tag => "#{s.version}" }
-  s.source       = { :git => 'https://github.com/Magiic/FireMock.git', :tag => "1.0.2" }
+  s.source       = { :git => 'https://github.com/Magiic/FireMock.git', :tag => "1.0.3" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
