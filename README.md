@@ -41,17 +41,17 @@ enum NewsMock: FireMockProtocol {
     case failedParameters
 
     public var bundle: Bundle { return Bundle.main }
-    
+
     public static var defaultMock: FireMockProtocol =  NewsMock.success
-    
+
     public var afterTime: TimeInterval { return 0.0 }
-    
+
     public func mockFile() -> String {
         switch self {
         case .success:
             return "success.json"
         case .failedParameters:
-            return "failedParameters.json" 
+            return "failedParameters.json"
         }
     }
 }
@@ -66,9 +66,16 @@ FireMock.registerMock(mock: mock, forURL: url, enabled: true, httpResponse: nil)
 
 ## Integrate with Alamofire
 
-If you use Alamofire 3rd Party, you need create a new URLSessionConfiguration and add FireURLProtocol. 
+If you use Alamofire 3rd Party, you need create a new URLSessionConfiguration and add FireURLProtocol.
+
+```
+let configuration = URLSessionConfiguration.default
+if FireMock.isEnabled {
+  configuration.protocolClasses?.insert(FireURLProtocol.self as AnyClass, at: 0)
+}
+let manager = SessionManager(configuration: configuration)
+``
 
 ## License
 
 This project is licensed under the MIT License
-
