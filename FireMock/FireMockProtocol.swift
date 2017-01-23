@@ -17,9 +17,6 @@ public protocol FireMockProtocol {
     /// Bundle where file is located
     var bundle: Bundle { get }
     
-    /// Default Mock used.
-    static var defaultMock: FireMockProtocol { get set }
-    
     /// Specifies delay time before mock returns response. Default is 0.0 means instantly.
     var afterTime: TimeInterval { get }
     

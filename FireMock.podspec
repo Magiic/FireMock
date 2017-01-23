@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   s.description  = "FireMock help to build mock to test your network requests with files (json, xml, etc.). Add easily multiples files
   for a specific request and test for each how your application respond."
 
-  s.homepage     = "http://EXAMPLE/FireMock"
+  s.homepage     = "https://github.com/Magiic/FireMock"
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -72,7 +72,7 @@ Pod::Spec.new do |s|
   #
 
   # s.source       = { :git => ".", :tag => "#{s.version}" }
-  s.source       = { :path => '.' }
+  s.source       = { :git => 'https://github.com/Magiic/FireMock.git', :tag => "1.0.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
