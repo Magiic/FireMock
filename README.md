@@ -42,8 +42,6 @@ enum NewsMock: FireMockProtocol {
 
     public var bundle: Bundle { return Bundle.main }
 
-    public static var defaultMock: FireMockProtocol =  NewsMock.success
-
     public var afterTime: TimeInterval { return 0.0 }
 
     public func mockFile() -> String {
