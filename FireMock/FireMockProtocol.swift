@@ -13,6 +13,18 @@ enum MockError: Error {
     case buildDataFailed
 }
 
+public enum MockHTTPMethod: String {
+    case get     = "GET"
+    case post    = "POST"
+    case put     = "PUT"
+    case patch   = "PATCH"
+    case options = "OPTIONS"
+    case head    = "HEAD"
+    case delete  = "DELETE"
+    case trace   = "TRACE"
+    case connect = "CONNECT"
+}
+
 public protocol FireMockProtocol {
     /// Bundle where file is located
     var bundle: Bundle { get }
@@ -63,13 +75,16 @@ public struct FireMock {
     
     public struct ConfigMock {
         var mock: FireMockProtocol
+        var httpMethod: MockHTTPMethod
         var enabled: Bool = true
         var httpResponse: HTTPURLResponse? = nil
+        var url: URL
     }
     
-    /// Dictionary mocks added.
-    private static var mocks: [URL: ConfigMock] = [:]
-    
+    /// Mocks added.
+    public private(set) static var mocks: [ConfigMock] = []
+
+    /// Specifies if FireMock is enabled.
     public private(set) static var isEnabled: Bool = false
     
     
@@ -78,24 +93,25 @@ public struct FireMock {
     /// - Parameters:
     ///   - mock: FireMockProtocol contained file mock will be used.
     ///   - url: URL associated to mock.
-    public static func registerMock<T: FireMockProtocol>(mock: T, forURL url: URL, enabled: Bool = true, httpResponse: HTTPURLResponse? = nil) {
-        mocks[url] = ConfigMock(mock: mock, enabled: enabled, httpResponse: httpResponse)
+    public static func registerMock<T: FireMockProtocol>(mock: T, forURL url: URL, httpMethod: MockHTTPMethod, enabled: Bool = true, httpResponse: HTTPURLResponse? = nil) {
+
+        // Remove similar mock if existing
+        mocks = mocks.filter({ !($0.url == url && $0.httpMethod == httpMethod) })
+        
+        let config = ConfigMock(mock: mock, httpMethod: httpMethod, enabled: enabled, httpResponse: httpResponse, url: url)
+        mocks.append(config)
     }
     
     /// Unregister a FireMockProtocol for a specific URL.
     ///
     /// - Parameter url: URL associated to mock.
-    public static func unregisterMock(forURL url: URL) {
-        mocks.removeValue(forKey: url)
+    public static func unregisterMock(forURL url: URL, httpMethod: MockHTTPMethod) {
+        mocks = mocks.filter({ !($0.url == url && $0.httpMethod == httpMethod) })
     }
     
     /// Unregister all mocks.
     public static func unregisterAllMocks() {
         mocks.removeAll()
-    }
-    
-    public static func allMocks() -> [URL: ConfigMock] {
-        return mocks
     }
     
     /// Enabled FireMock.
@@ -119,6 +135,10 @@ public struct FireMock {
     
     /// Specifies hosts where mock cannot be used.
     public static var excludeHosts: [String] = []
+}
+
+func ==(lhs: FireMock.ConfigMock, rhs: FireMock.ConfigMock) -> Bool {
+    return lhs.url == rhs.url && rhs.httpMethod == lhs.httpMethod
 }
 
 

@@ -59,7 +59,7 @@ enum NewsMock: FireMockProtocol {
 
 ```
 let mock = NewsMock.success
-FireMock.registerMock(mock: mock, forURL: url, enabled: true, httpResponse: nil)
+FireMock.registerMock(mock: mock, httpMethod: .get, forURL: url, enabled: true, httpResponse: nil)
 ```
 
 ## Integrate with Alamofire

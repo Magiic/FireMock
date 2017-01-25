@@ -50,9 +50,10 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
     }
     
     public override func startLoading() {
-        guard let url = request.url else { return }
-        
-        if let configMock = FireMock.allMocks()[url], canUseMock(url: url) && configMock.enabled {
+        guard let url = request.url, let httpMethod = request.httpMethod else { return }
+
+        if
+        let configMock = FireMock.mocks.filter({ $0.url == url && $0.httpMethod.rawValue == httpMethod}).last, canUseMock(url: url), configMock.enabled, httpMethod == configMock.httpMethod.rawValue {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + configMock.mock.afterTime, execute: {
                 do {
                     let data = try configMock.mock.readMockFile()
