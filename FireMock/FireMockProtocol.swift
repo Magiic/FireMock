@@ -93,7 +93,7 @@ public struct FireMock {
     /// - Parameters:
     ///   - mock: FireMockProtocol contained file mock will be used.
     ///   - url: URL associated to mock.
-    public static func registerMock<T: FireMockProtocol>(mock: T, forURL url: URL, httpMethod: MockHTTPMethod, enabled: Bool = true, httpResponse: HTTPURLResponse? = nil) {
+    public static func register<T: FireMockProtocol>(mock: T, forURL url: URL, httpMethod: MockHTTPMethod, enabled: Bool = true, httpResponse: HTTPURLResponse? = nil) {
 
         // Remove similar mock if existing
         mocks = mocks.filter({ !($0.url == url && $0.httpMethod == httpMethod) })
@@ -105,12 +105,12 @@ public struct FireMock {
     /// Unregister a FireMockProtocol for a specific URL.
     ///
     /// - Parameter url: URL associated to mock.
-    public static func unregisterMock(forURL url: URL, httpMethod: MockHTTPMethod) {
+    public static func unregister(forURL url: URL, httpMethod: MockHTTPMethod) {
         mocks = mocks.filter({ !($0.url == url && $0.httpMethod == httpMethod) })
     }
     
     /// Unregister all mocks.
-    public static func unregisterAllMocks() {
+    public static func unregisterAll() {
         mocks.removeAll()
     }
     

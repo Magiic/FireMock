@@ -59,7 +59,21 @@ enum NewsMock: FireMockProtocol {
 
 ```
 let mock = NewsMock.success
-FireMock.registerMock(mock: mock, httpMethod: .get, forURL: url, enabled: true, httpResponse: nil)
+FireMock.register(mock: mock, httpMethod: .get, forURL: url, enabled: true, httpResponse: nil)
+```
+
+### Host Condition
+
+You can use your mock files with specific hosts only. If empty, mock works for all hosts.
+
+```
+FireMock.onlyHosts = ["xxx.com"]
+```
+
+You can exclude hosts.
+
+```
+FireMock.excludeHosts = ["xxx.com"]
 ```
 
 ## Integrate with Alamofire
