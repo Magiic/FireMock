@@ -9,7 +9,6 @@
 import UIKit
 import Foundation
 
-
 public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTaskDelegate {
     
     private var dataTask: URLSessionDataTask?
@@ -51,13 +50,13 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
     
     public override func startLoading() {
         guard let url = request.url, let httpMethod = request.httpMethod else { return }
+        guard let configMock = FireURLProtocol.findMock(url: url, httpMethod: httpMethod) else { return }
 
-        if
-        let configMock = FireMock.mocks.filter({ $0.url == url && $0.httpMethod.rawValue == httpMethod}).last, canUseMock(url: url), configMock.enabled, httpMethod == configMock.httpMethod.rawValue {
+        if FireURLProtocol.canUseMock(url: url), configMock.enabled, httpMethod == configMock.httpMethod.rawValue {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + configMock.mock.afterTime, execute: {
                 do {
                     let data = try configMock.mock.readMockFile()
-                    let response = configMock.httpResponse ?? HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: nil)!
+                    let response = HTTPURLResponse(url: url, statusCode: configMock.mock.statusCode, httpVersion: configMock.mock.httpVersion, headerFields: configMock.mock.headers)!
                     self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: URLCache.StoragePolicy.notAllowed)
                     self.client?.urlProtocol(self, didLoad: data)
                     self.client?.urlProtocolDidFinishLoading(self)
@@ -103,30 +102,43 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
         
         self.client?.urlProtocolDidFinishLoading(self)
     }
-}
 
-fileprivate extension FireURLProtocol {
-    fileprivate func canUseMock(url: URL) -> Bool {
-        let hostCondition: Bool
-        
-        if let host = url.host {
-            hostCondition = FireMock.onlyHosts.contains(host) || !(FireMock.excludeHosts.contains(host))
-        } else {
-            hostCondition = true
-        }
-        
-        let useMock = FireMock.onlyHosts.isEmpty || hostCondition
-        
-        return useMock
-        
-    }
+    // MARK: - Helper
     
-    fileprivate func validateCondition(predicates: [NSPredicate], for url: URL) -> Bool {
-        if predicates.isEmpty {
+    internal static func findMock(url: URL, httpMethod: String) -> FireMock.ConfigMock? {
+        let urlComponents = URLComponents(string: url.absoluteString)
+        if let configMock = FireMock.mocks.filter({ $0.url == url && $0.httpMethod.rawValue == httpMethod}).last { return configMock }
+        for configMock in FireMock.mocks {
+            if
+                let params = configMock.mock.parameters,
+                let urlComp = urlComponents,
+                let queryItems = urlComp.queryItems,
+                params.count == queryItems.count,
+                params == queryItems.map({ $0.name }),
+                configMock.httpMethod.rawValue == httpMethod {
+                return configMock
+            }
+        }
+
+        return nil
+    }
+
+    internal static func canUseMock(url: URL) -> Bool {
+        if let host = url.host {
+            let containsHost = FireMock.onlyHosts.contains(host)
+            let excludeHost = FireMock.excludeHosts.contains(host)
+            if excludeHost {
+                return false
+            } else if containsHost || (FireMock.onlyHosts.isEmpty && FireMock.excludeHosts.isEmpty) {
+                return true
+            } else if !containsHost || excludeHost {
+                return false
+            } else {
+                return true
+            }
+            
+        } else {
             return true
         }
-        
-        let multiplePredicates = NSCompoundPredicate(type: .and, subpredicates: predicates)
-        return multiplePredicates.evaluate(with: url.absoluteString)
     }
 }

@@ -12,7 +12,7 @@ To mock your requests you need to add files contains your structure response dat
 To integrate FireMock into your Xcode project using CocoaPods, specify it in your Podfile:
 
 ```
-pod 'FireMock', :git => 'https://github.com/Magiic/FireMock.git'
+pod 'FireMock'
 ```
 
 ## Usage

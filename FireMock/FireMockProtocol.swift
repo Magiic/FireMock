@@ -31,6 +31,18 @@ public protocol FireMockProtocol {
     
     /// Specifies delay time before mock returns response. Default is 0.0 means instantly.
     var afterTime: TimeInterval { get }
+
+    /// Specifies parameters name matching with url.
+    var parameters: [String]? { get }
+
+    /// Specifies headers fields returns from HTTPURLResponse. Default is nil.
+    var headers: [String: String]? { get }
+
+    /// Specifies version HTTP returns from HTTPURLResponse. Default is 1.1.
+    var httpVersion: String? { get }
+
+    /// Specifies status code returns from HTTPURLResponse. Default is 200.
+    var statusCode: Int { get }
     
     /// Specifies the name of mock file used.
     func mockFile() -> String
@@ -40,6 +52,16 @@ public protocol FireMockProtocol {
 public extension FireMockProtocol {
     
     var afterTime: TimeInterval { return 0.0 }
+
+    var bundle: Bundle { return Bundle.main }
+
+    var parameters: [String]? { return nil }
+
+    var headers: [String: String]? { return nil }
+
+    var httpVersion: String? { return "1.1" }
+
+    var statusCode: Int { return 200 }
     
     /// Read mock from mockFile function specifies in FireMockProtocol. If no extension, json is used to find the file.
     /// - Returns: Data file ou error if file not found.
@@ -77,7 +99,6 @@ public struct FireMock {
         var mock: FireMockProtocol
         var httpMethod: MockHTTPMethod
         var enabled: Bool = true
-        var httpResponse: HTTPURLResponse? = nil
         var url: URL
     }
     
@@ -93,12 +114,12 @@ public struct FireMock {
     /// - Parameters:
     ///   - mock: FireMockProtocol contained file mock will be used.
     ///   - url: URL associated to mock.
-    public static func register<T: FireMockProtocol>(mock: T, forURL url: URL, httpMethod: MockHTTPMethod, enabled: Bool = true, httpResponse: HTTPURLResponse? = nil) {
+    public static func register<T: FireMockProtocol>(mock: T, forURL url: URL, httpMethod: MockHTTPMethod, enabled: Bool = true) {
 
         // Remove similar mock if existing
         mocks = mocks.filter({ !($0.url == url && $0.httpMethod == httpMethod) })
         
-        let config = ConfigMock(mock: mock, httpMethod: httpMethod, enabled: enabled, httpResponse: httpResponse, url: url)
+        let config = ConfigMock(mock: mock, httpMethod: httpMethod, enabled: enabled, url: url)
         mocks.append(config)
     }
     

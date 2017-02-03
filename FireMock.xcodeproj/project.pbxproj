@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		703290761E311D9500E4240C /* FireMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7032906C1E311D9500E4240C /* FireMock.framework */; };
-		7032907B1E311D9500E4240C /* FireMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7032907A1E311D9500E4240C /* FireMockTests.swift */; };
 		7032907D1E311D9500E4240C /* FireMock.h in Headers */ = {isa = PBXBuildFile; fileRef = 7032906F1E311D9500E4240C /* FireMock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		703290881E311D9E00E4240C /* FireMockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703290861E311D9E00E4240C /* FireMockProtocol.swift */; };
 		703290891E311D9E00E4240C /* FireURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703290871E311D9E00E4240C /* FireURLProtocol.swift */; };
+		D54335211E454CAD0077556E /* FireMockFindMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54335201E454CAD0077556E /* FireMockFindMockTests.swift */; };
+		D5F18EA81E453E3500992476 /* FireMockCanUseMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,10 +30,11 @@
 		7032906F1E311D9500E4240C /* FireMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FireMock.h; sourceTree = "<group>"; };
 		703290701E311D9500E4240C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		703290751E311D9500E4240C /* FireMockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FireMockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7032907A1E311D9500E4240C /* FireMockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireMockTests.swift; sourceTree = "<group>"; };
 		7032907C1E311D9500E4240C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		703290861E311D9E00E4240C /* FireMockProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockProtocol.swift; sourceTree = "<group>"; };
 		703290871E311D9E00E4240C /* FireURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireURLProtocol.swift; sourceTree = "<group>"; };
+		D54335201E454CAD0077556E /* FireMockFindMockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockFindMockTests.swift; sourceTree = "<group>"; };
+		D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockCanUseMockTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +88,8 @@
 		703290791E311D9500E4240C /* FireMockTests */ = {
 			isa = PBXGroup;
 			children = (
-				7032907A1E311D9500E4240C /* FireMockTests.swift */,
+				D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */,
+				D54335201E454CAD0077556E /* FireMockFindMockTests.swift */,
 				7032907C1E311D9500E4240C /* Info.plist */,
 			);
 			path = FireMockTests;
@@ -212,7 +215,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7032907B1E311D9500E4240C /* FireMockTests.swift in Sources */,
+				D54335211E454CAD0077556E /* FireMockFindMockTests.swift in Sources */,
+				D5F18EA81E453E3500992476 /* FireMockCanUseMockTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +412,7 @@
 				703290821E311D9500E4240C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		703290831E311D9500E4240C /* Build configuration list for PBXNativeTarget "FireMockTests" */ = {
 			isa = XCConfigurationList;
@@ -416,6 +421,7 @@
 				703290851E311D9500E4240C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
