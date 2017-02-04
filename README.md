@@ -44,6 +44,14 @@ enum NewsMock: FireMockProtocol {
 
     public var afterTime: TimeInterval { return 0.0 }
 
+    public var parameters: [String]? { return nil }
+
+    public var headers: [String : String]? { return nil }
+
+    public var statusCode: Int { return 200 }
+
+    public var httpVersion: String? { return "1.1" }
+
     public func mockFile() -> String {
         switch self {
         case .success:
@@ -54,12 +62,13 @@ enum NewsMock: FireMockProtocol {
     }
 }
 ```
+See FireMockProtocol to more information.
 
 ### Register
 
 ```
 let mock = NewsMock.success
-FireMock.register(mock: mock, httpMethod: .get, forURL: url, enabled: true, httpResponse: nil)
+FireMock.register(mock: mock, httpMethod: .get, forURL: url, enabled: true)
 ```
 
 ### Host Condition
