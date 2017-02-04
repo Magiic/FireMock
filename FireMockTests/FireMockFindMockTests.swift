@@ -55,6 +55,16 @@ class FireMockFindMockTests: XCTestCase {
         super.tearDown()
     }
 
+    func testAbsoluteUrlNoMatching() {
+        let urlStrNotComplete = "https://foo.org/mypath?title=mytitle&content=mycontent"
+        let url = URL(string: urlStrNotComplete)!
+        let urlStrComplete = "https://foo.org/musecondpath?title=mytitle&content=mycontent"
+        let urlComplete = URL(string: urlStrComplete)!
+        FireMock.register(mock: NewsMock.hasParameters, forURL: url, httpMethod: .get)
+        let configMock = FireURLProtocol.findMock(url: urlComplete, httpMethod: MockHTTPMethod.get.rawValue)
+        XCTAssertNil(configMock)
+    }
+
     func testNoneParameters() {
         let urlStr = "https://foo.org/mypath?title=mytitle&content=mycontent"
         let url = URL(string: urlStr)!

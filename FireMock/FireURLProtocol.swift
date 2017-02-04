@@ -115,6 +115,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
                 let queryItems = urlComp.queryItems,
                 params.count == queryItems.count,
                 params == queryItems.map({ $0.name }),
+                configMock.url.absoluteString == url.absoluteString,
                 configMock.httpMethod.rawValue == httpMethod {
                 return configMock
             }
