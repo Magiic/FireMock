@@ -12,6 +12,7 @@
 		703290881E311D9E00E4240C /* FireMockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703290861E311D9E00E4240C /* FireMockProtocol.swift */; };
 		703290891E311D9E00E4240C /* FireURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703290871E311D9E00E4240C /* FireURLProtocol.swift */; };
 		D54335211E454CAD0077556E /* FireMockFindMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54335201E454CAD0077556E /* FireMockFindMockTests.swift */; };
+		D54335231E46129B0077556E /* FireMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54335221E46129B0077556E /* FireMockTests.swift */; };
 		D5F18EA81E453E3500992476 /* FireMockCanUseMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 		703290861E311D9E00E4240C /* FireMockProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockProtocol.swift; sourceTree = "<group>"; };
 		703290871E311D9E00E4240C /* FireURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireURLProtocol.swift; sourceTree = "<group>"; };
 		D54335201E454CAD0077556E /* FireMockFindMockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockFindMockTests.swift; sourceTree = "<group>"; };
+		D54335221E46129B0077556E /* FireMockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockTests.swift; sourceTree = "<group>"; };
 		D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockCanUseMockTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +90,7 @@
 		703290791E311D9500E4240C /* FireMockTests */ = {
 			isa = PBXGroup;
 			children = (
+				D54335221E46129B0077556E /* FireMockTests.swift */,
 				D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */,
 				D54335201E454CAD0077556E /* FireMockFindMockTests.swift */,
 				7032907C1E311D9500E4240C /* Info.plist */,
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54335231E46129B0077556E /* FireMockTests.swift in Sources */,
 				D54335211E454CAD0077556E /* FireMockFindMockTests.swift in Sources */,
 				D5F18EA81E453E3500992476 /* FireMockCanUseMockTests.swift in Sources */,
 			);
