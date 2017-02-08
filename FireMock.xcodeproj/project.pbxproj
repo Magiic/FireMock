@@ -11,6 +11,8 @@
 		7032907D1E311D9500E4240C /* FireMock.h in Headers */ = {isa = PBXBuildFile; fileRef = 7032906F1E311D9500E4240C /* FireMock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		703290881E311D9E00E4240C /* FireMockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703290861E311D9E00E4240C /* FireMockProtocol.swift */; };
 		703290891E311D9E00E4240C /* FireURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703290871E311D9E00E4240C /* FireURLProtocol.swift */; };
+		D504CE011E4B5E0A00AEE670 /* FireMockProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D504CE001E4B5E0A00AEE670 /* FireMockProtocolTests.swift */; };
+		D504CE031E4B6EFA00AEE670 /* firemock-news.json in Resources */ = {isa = PBXBuildFile; fileRef = D504CE021E4B6EFA00AEE670 /* firemock-news.json */; };
 		D54335211E454CAD0077556E /* FireMockFindMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54335201E454CAD0077556E /* FireMockFindMockTests.swift */; };
 		D54335231E46129B0077556E /* FireMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54335221E46129B0077556E /* FireMockTests.swift */; };
 		D5F18EA81E453E3500992476 /* FireMockCanUseMockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */; };
@@ -34,6 +36,8 @@
 		7032907C1E311D9500E4240C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		703290861E311D9E00E4240C /* FireMockProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockProtocol.swift; sourceTree = "<group>"; };
 		703290871E311D9E00E4240C /* FireURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireURLProtocol.swift; sourceTree = "<group>"; };
+		D504CE001E4B5E0A00AEE670 /* FireMockProtocolTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockProtocolTests.swift; sourceTree = "<group>"; };
+		D504CE021E4B6EFA00AEE670 /* firemock-news.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "firemock-news.json"; sourceTree = "<group>"; };
 		D54335201E454CAD0077556E /* FireMockFindMockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockFindMockTests.swift; sourceTree = "<group>"; };
 		D54335221E46129B0077556E /* FireMockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockTests.swift; sourceTree = "<group>"; };
 		D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireMockCanUseMockTests.swift; sourceTree = "<group>"; };
@@ -90,12 +94,22 @@
 		703290791E311D9500E4240C /* FireMockTests */ = {
 			isa = PBXGroup;
 			children = (
+				D504CE001E4B5E0A00AEE670 /* FireMockProtocolTests.swift */,
 				D54335221E46129B0077556E /* FireMockTests.swift */,
 				D5F18EA71E453E3500992476 /* FireMockCanUseMockTests.swift */,
 				D54335201E454CAD0077556E /* FireMockFindMockTests.swift */,
+				D504CE041E4B6EFD00AEE670 /* resources */,
 				7032907C1E311D9500E4240C /* Info.plist */,
 			);
 			path = FireMockTests;
+			sourceTree = "<group>";
+		};
+		D504CE041E4B6EFD00AEE670 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				D504CE021E4B6EFA00AEE670 /* firemock-news.json */,
+			);
+			name = resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D504CE031E4B6EFA00AEE670 /* firemock-news.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +236,7 @@
 				D54335231E46129B0077556E /* FireMockTests.swift in Sources */,
 				D54335211E454CAD0077556E /* FireMockFindMockTests.swift in Sources */,
 				D5F18EA81E453E3500992476 /* FireMockCanUseMockTests.swift in Sources */,
+				D504CE011E4B5E0A00AEE670 /* FireMockProtocolTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

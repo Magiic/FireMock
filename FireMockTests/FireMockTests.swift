@@ -22,6 +22,10 @@ class FireMockTests: XCTestCase {
         case hasParameters
         case noMatching
 
+        var bundle: Bundle {
+            return Bundle(for: FireMockProtocolTests.self)
+        }
+        
         func mockFile() -> String {
             switch self {
             case .noParams:
