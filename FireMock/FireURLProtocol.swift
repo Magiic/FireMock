@@ -6,8 +6,8 @@
 //  Copyright © 2016 BEN HARZALLAH. All rights reserved.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTaskDelegate {
     
@@ -36,7 +36,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
         if let _ = URLProtocol.property(forKey: FireURLProtocol.FireURLProtocolKey, in: with) {
             return false
         }
-        
+
         return true
     }
     
@@ -50,11 +50,12 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
     
     public override func startLoading() {
         guard let url = request.url, let httpMethod = request.httpMethod else { return }
-
+        
         if let configMock = FireURLProtocol.findMock(url: url, httpMethod: httpMethod),
             FireURLProtocol.canUseMock(url: url),
             configMock.enabled {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + configMock.mock.afterTime, execute: {
+                FireMockDebug.debug(message: "File mock returns for \(url) : \(configMock.mock.mockFile())", level: .high)
                 do {
                     let data = try configMock.mock.readMockFile()
                     let response = HTTPURLResponse(url: url, statusCode: configMock.mock.statusCode, httpVersion: configMock.mock.httpVersion, headerFields: configMock.mock.headers)!
@@ -134,7 +135,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
             // case : Url req with params, url mock with params but parameters in protocol is empty.
             else if
                 let urlComp = urlComponents,
-                let queryItems = urlComp.queryItems,
+                let _ = urlComp.queryItems,
                 configMock.url == url,
                 configMock.httpMethod.rawValue == httpMethod {
 
