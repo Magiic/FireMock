@@ -11,7 +11,7 @@ To mock your requests you need to add files contains your structure response dat
 
 To integrate FireMock into your Xcode project using CocoaPods, specify it in your Podfile:
 
-```
+```swift
 pod 'FireMock'
 ```
 
@@ -19,7 +19,7 @@ pod 'FireMock'
 
 ### Import FireMock
 
-```
+```swift
 @import FireMock
 ```
 
@@ -27,7 +27,7 @@ pod 'FireMock'
 
 Add this code in your application to enable FireMock.
 
-```
+```swift
 FireMock.enabled(true)
 ```
 
@@ -35,7 +35,7 @@ FireMock.enabled(true)
 
 For example if you have a service to fetch news with multiple possible responses :
 
-```
+```swift
 enum NewsMock: FireMockProtocol {
     case success
     case failedParameters
@@ -66,7 +66,7 @@ See FireMockProtocol to more information.
 
 ### Register
 
-```
+```swift
 let mock = NewsMock.success
 FireMock.register(mock: mock, httpMethod: .get, forURL: url, enabled: true)
 ```
@@ -75,13 +75,13 @@ FireMock.register(mock: mock, httpMethod: .get, forURL: url, enabled: true)
 
 You can use your mock files with specific hosts only. If empty, mock works for all hosts.
 
-```
+```swift
 FireMock.onlyHosts = ["xxx.com"]
 ```
 
 You can exclude hosts.
 
-```
+```swift
 FireMock.excludeHosts = ["xxx.com"]
 ```
 
@@ -89,7 +89,7 @@ FireMock.excludeHosts = ["xxx.com"]
 
 If you use Alamofire 3rd Party, you need create a new URLSessionConfiguration and add FireURLProtocol.
 
-```
+```swift
 let configuration = URLSessionConfiguration.default
 if FireMock.isEnabled {
   configuration.protocolClasses?.insert(FireURLProtocol.self as AnyClass, at: 0)
