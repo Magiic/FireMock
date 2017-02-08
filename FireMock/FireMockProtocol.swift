@@ -43,6 +43,9 @@ public protocol FireMockProtocol {
 
     /// Specifies status code returns from HTTPURLResponse. Default is 200.
     var statusCode: Int { get }
+
+    /// Specifies name mock. Appear in view list mock.
+    var name: String? { get }
     
     /// Specifies the name of mock file used.
     func mockFile() -> String
@@ -62,6 +65,8 @@ public extension FireMockProtocol {
     var httpVersion: String? { return "1.1" }
 
     var statusCode: Int { return 200 }
+
+    var name: String? { return nil }
     
     /// Read mock from mockFile function specifies in FireMockProtocol. If no extension, json is used to find the file.
     /// - Returns: Data file ou error if file not found.
@@ -156,6 +161,12 @@ public struct FireMock {
     
     /// Specifies hosts where mock cannot be used.
     public static var excludeHosts: [String] = []
+
+    public static func presentMockRegister(from: UIViewController, backTapped: ( () -> Void )?) {
+        let mockController = FireMockViewController(nibName: "FireMockViewController", bundle: Bundle(for: FireMockViewController.self))
+        mockController.backTapped = backTapped
+        from.present(mockController, animated: true, completion: nil)
+    }
 }
 
 func ==(lhs: FireMock.ConfigMock, rhs: FireMock.ConfigMock) -> Bool {
