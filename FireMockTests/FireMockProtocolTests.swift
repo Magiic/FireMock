@@ -41,7 +41,7 @@ class FireMockProtocolTests: XCTestCase {
         var parameters: [String]? {
             switch self {
             case .successFill:
-                return nil
+                return ["title", "content"]
             }
         }
         

@@ -22,6 +22,7 @@ public class FireMockViewController: UIViewController {
         registerXib()
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView()
         
         enabledFireMock.isOn = FireMock.isEnabled
     }
@@ -62,6 +63,7 @@ extension FireMockViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(mock: mock)
         cell.enabled = { on in
             mock.enabled = on
+            FireMock.update(configMock: mock)
         }
 
         return cell

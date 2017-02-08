@@ -139,6 +139,11 @@ public struct FireMock {
     public static func unregisterAll() {
         mocks.removeAll()
     }
+
+    internal static func update(configMock: ConfigMock) {
+        mocks = mocks.filter({ !($0.url == configMock.url && $0.httpMethod == configMock.httpMethod) })
+        mocks.append(configMock)
+    }
     
     /// Enabled FireMock.
     ///

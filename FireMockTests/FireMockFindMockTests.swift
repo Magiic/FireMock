@@ -72,16 +72,22 @@ class FireMockFindMockTests: XCTestCase {
     func testNoneParameters() {
         let urlStr = "https://foo.org/mypath?title=mytitle&content=mycontent"
         let url = URL(string: urlStr)!
-        FireMock.register(mock: NewsMock.noParams, forURL: url, httpMethod: .get)
+        let urlStrNotComplete = "https://foo.org/mypath"
+        let urlNotComplete = URL(string: urlStrNotComplete)!
+        FireMock.register(mock: NewsMock.noParams, forURL: urlNotComplete, httpMethod: .get)
         let configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
-        XCTAssertNotNil(configMock)
+        XCTAssertNil(configMock)
     }
 
     func testHasParameter() {
         let urlStr = "https://foo.org/mypath?title=mytitle&content=mycontent"
         let url = URL(string: urlStr)!
-        FireMock.register(mock: NewsMock.noParams, forURL: url, httpMethod: .get)
+        FireMock.register(mock: NewsMock.hasParameters, forURL: url, httpMethod: .get)
         let configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
+        XCTAssertNotNil(configMock)
+
+        FireMock.unregisterAll()
+        FireMock.register(mock: NewsMock.noParams, forURL: url, httpMethod: .get)
         XCTAssertNotNil(configMock)
     }
 

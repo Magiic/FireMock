@@ -108,16 +108,36 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
     
     internal static func findMock(url: URL, httpMethod: String) -> FireMock.ConfigMock? {
         let urlComponents = URLComponents(string: url.absoluteString)
-        if let configMock = FireMock.mocks.filter({ $0.url == url && $0.httpMethod.rawValue == httpMethod}).last { return configMock }
+
         for configMock in FireMock.mocks {
+            let params = configMock.mock.parameters ?? []
+            // Case where urls absolute string are equals and parameters name from protocol are equals with query items from url req.
             if
-                let params = configMock.mock.parameters,
                 let urlComp = urlComponents,
                 let queryItems = urlComp.queryItems,
                 params.count == queryItems.count,
                 params == queryItems.map({ $0.name }),
                 configMock.url.absoluteString == url.absoluteString,
                 configMock.httpMethod.rawValue == httpMethod {
+                return configMock
+            }
+            // Case where zero parameters exists in two url.
+            else if
+                let urlComp = urlComponents,
+                urlComp.queryItems == nil,
+                params.count == 0,
+                configMock.url.absoluteString == url.absoluteString,
+                configMock.httpMethod.rawValue == httpMethod {
+
+                return configMock
+            }
+            // case : Url req with params, url mock with params but parameters in protocol is empty.
+            else if
+                let urlComp = urlComponents,
+                let queryItems = urlComp.queryItems,
+                configMock.url == url,
+                configMock.httpMethod.rawValue == httpMethod {
+
                 return configMock
             }
         }

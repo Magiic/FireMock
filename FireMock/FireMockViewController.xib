@@ -25,7 +25,7 @@
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DgT-Qf-AMV">
                     <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                     <items>
-                        <navigationItem title="Title" id="rP2-EE-aeW">
+                        <navigationItem title="Mocks" id="rP2-EE-aeW">
                             <barButtonItem key="leftBarButtonItem" title="Back" id="cOg-H3-2LW">
                                 <connections>
                                     <action selector="back:" destination="-1" id="gva-Ho-Ntg"/>
@@ -40,25 +40,27 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vnb-oY-zFd">
                     <rect key="frame" x="0.0" y="125" width="320" height="443"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="qrO-l7-CqD"/>
                         <outlet property="delegate" destination="-1" id="ZDE-E9-Z0Z"/>
                     </connections>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disabled FireMock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJa-Ah-CEk">
-                    <rect key="frame" x="16" y="84" width="141.5" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable FireMock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJa-Ah-CEk">
+                    <rect key="frame" x="30" y="84" width="126.5" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g1B-Wh-VuT">
-                    <rect key="frame" x="182.5" y="79" width="51" height="31"/>
+                    <rect key="frame" x="181.5" y="79" width="51" height="31"/>
+                    <color key="onTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <action selector="enabledFireMockWithSender:" destination="-1" eventType="touchUpInside" id="BNA-yA-jc1"/>
                     </connections>
                 </switch>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.91517135090000001" green="0.9334747779" blue="0.9334747779" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="KJa-Ah-CEk" firstAttribute="top" secondItem="DgT-Qf-AMV" secondAttribute="bottom" constant="20" id="2JS-xw-hBj"/>
                 <constraint firstItem="g1B-Wh-VuT" firstAttribute="leading" secondItem="KJa-Ah-CEk" secondAttribute="trailing" constant="25" id="34h-Xy-uxW"/>
@@ -66,7 +68,7 @@
                 <constraint firstAttribute="trailing" secondItem="DgT-Qf-AMV" secondAttribute="trailing" id="JqN-h9-tkf"/>
                 <constraint firstItem="g1B-Wh-VuT" firstAttribute="centerY" secondItem="KJa-Ah-CEk" secondAttribute="centerY" id="e3a-xW-xXL"/>
                 <constraint firstItem="Vnb-oY-zFd" firstAttribute="top" secondItem="KJa-Ah-CEk" secondAttribute="bottom" constant="20" id="miT-fW-6hO"/>
-                <constraint firstItem="KJa-Ah-CEk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="oKN-uP-t8Z"/>
+                <constraint firstItem="KJa-Ah-CEk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="oKN-uP-t8Z"/>
                 <constraint firstItem="DgT-Qf-AMV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="oWT-k0-MxP"/>
                 <constraint firstAttribute="bottom" secondItem="Vnb-oY-zFd" secondAttribute="bottom" id="rc5-mj-4BQ"/>
                 <constraint firstItem="DgT-Qf-AMV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="t0q-a8-eqM"/>
