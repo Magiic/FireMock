@@ -52,6 +52,8 @@ enum NewsMock: FireMockProtocol {
 
     public var httpVersion: String? { return "1.1" }
 
+    public var name: String? { return "Fetch News" }
+
     public func mockFile() -> String {
         switch self {
         case .success:
@@ -83,6 +85,22 @@ You can exclude hosts.
 
 ```
 FireMock.excludeHosts = ["xxx.com"]
+```
+
+### Debug
+
+Debug information. You can set 2 different level information.
+
+```
+FireMock.debug(enabled: true)
+```
+
+### Enable Mock request on runtime
+
+All mocks registers can be activate or not on runtime. FireMock provide with a ViewController which list all mocks registers.  
+
+```
+FireMock.presentMockRegisters(from: self, backTapped: nil)
 ```
 
 ## Integrate with Alamofire
