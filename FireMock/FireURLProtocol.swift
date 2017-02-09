@@ -118,7 +118,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
                 let queryItems = urlComp.queryItems,
                 params.count == queryItems.count,
                 params == queryItems.map({ $0.name }),
-                configMock.url.absoluteString == url.absoluteString,
+                configMock.url.absoluteStringWithoutQuery == url.absoluteStringWithoutQuery,
                 configMock.httpMethod.rawValue == httpMethod {
                 return configMock
             }
@@ -163,5 +163,14 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
         } else {
             return true
         }
+    }
+}
+
+extension URL {
+    var absoluteStringWithoutQuery: String? {
+        if let query = query {
+            return absoluteString.replacingOccurrences(of: "?" + query, with: "")
+        }
+        return absoluteString
     }
 }
