@@ -20,6 +20,7 @@ class FireMockFindMockTests: XCTestCase {
     enum NewsMock: FireMockProtocol {
         case noParams
         case hasParameters
+        case hasOneParameter
         case noMatching
 
         var bundle: Bundle {
@@ -30,7 +31,7 @@ class FireMockFindMockTests: XCTestCase {
             switch self {
             case .noParams:
                 return "noParams.json"
-            case .hasParameters:
+            case .hasParameters, .hasOneParameter:
                 return "test.json"
             case .noMatching:
                 return "noMatching.json"
@@ -43,6 +44,8 @@ class FireMockFindMockTests: XCTestCase {
                 return nil
             case .hasParameters:
                 return ["title", "content"]
+            case .hasOneParameter:
+                return ["title"]
             case .noMatching:
                 return ["foo", "fee"]
             }
@@ -69,35 +72,51 @@ class FireMockFindMockTests: XCTestCase {
         XCTAssertNil(configMock)
     }
 
-    func testNoneParameters() {
-        let urlStr = "https://foo.org/mypath?title=mytitle&content=mycontent"
+    func testZeroParameters() {
+        let urlStr = "https://foo.org/mypath"
         let url = URL(string: urlStr)!
-        let urlStrNotComplete = "https://foo.org/mypath"
-        let urlNotComplete = URL(string: urlStrNotComplete)!
-        FireMock.register(mock: NewsMock.noParams, forURL: urlNotComplete, httpMethod: .get)
+        FireMock.register(mock: NewsMock.noParams, forURL: url, httpMethod: .get)
         let configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
-        XCTAssertNil(configMock)
+        XCTAssertNotNil(configMock)
     }
 
     func testHasParameter() {
-        let urlStr = "https://foo.org/mypath?title=mytitle&content=mycontent"
-        let url = URL(string: urlStr)!
+        var urlStr = "https://foo.org/mypath?title=mytitle&content=mycontent"
+        var url = URL(string: urlStr)!
         FireMock.register(mock: NewsMock.hasParameters, forURL: url, httpMethod: .get)
-        let configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
+        var configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
         XCTAssertNotNil(configMock)
 
         FireMock.unregisterAll()
         FireMock.register(mock: NewsMock.noParams, forURL: url, httpMethod: .get)
         XCTAssertNotNil(configMock)
+
+        FireMock.unregisterAll()
+        urlStr = "https://foo.org/mypath"
+        url = URL(string: urlStr)!
+        FireMock.register(mock: NewsMock.hasOneParameter, forURL: url, httpMethod: .get)
+        urlStr = "https://foo.org/mypath?title=mytitle"
+        url = URL(string: urlStr)!
+        configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
+        XCTAssertNotNil(configMock)
     }
 
     func testParametersNoMatching() {
-        let urlStrNotComplete = "https://foo.org/mypath"
-        let url = URL(string: urlStrNotComplete)!
-        let urlStrComplete = "https://foo.org/mypath?title=mytitle&content=mycontent"
-        let urlComplete = URL(string: urlStrComplete)!
-        FireMock.register(mock: NewsMock.noMatching, forURL: url, httpMethod: .get)
-        var configMock = FireURLProtocol.findMock(url: urlComplete, httpMethod: MockHTTPMethod.get.rawValue)
+        var urlStrRegister = "https://foo.org/mypath"
+        var urlRegister = URL(string: urlStrRegister)!
+        var urlRequestStr = "https://foo.org/mypath?title=mytitle&content=mycontent"
+        var urlRequest = URL(string: urlRequestStr)!
+        FireMock.register(mock: NewsMock.noMatching, forURL: urlRegister, httpMethod: .get)
+        var configMock = FireURLProtocol.findMock(url: urlRequest, httpMethod: MockHTTPMethod.get.rawValue)
+        XCTAssertNil(configMock)
+
+        FireMock.unregisterAll()
+        urlStrRegister = "https://foo.org/mypath?title=mytitle&content=mycontent"
+        urlRegister = URL(string: urlStrRegister)!
+        urlRequestStr = "https://foo.org/mypath"
+        urlRequest = URL(string: urlRequestStr)!
+        FireMock.register(mock: NewsMock.noParams, forURL: urlRegister, httpMethod: .get)
+        configMock = FireURLProtocol.findMock(url: urlRequest, httpMethod: MockHTTPMethod.get.rawValue)
         XCTAssertNil(configMock)
 
         FireMock.unregisterAll()

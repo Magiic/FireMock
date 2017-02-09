@@ -166,7 +166,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
     }
 }
 
-extension URL {
+fileprivate extension URL {
     var absoluteStringWithoutQuery: String? {
         if let query = query {
             return absoluteString.replacingOccurrences(of: "?" + query, with: "")
