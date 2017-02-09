@@ -91,7 +91,7 @@ FireMock.excludeHosts = ["xxx.com"]
 
 Debug information. You can set 2 different level information.
 
-```
+```swift
 FireMock.debug(enabled: true)
 ```
 
@@ -99,7 +99,7 @@ FireMock.debug(enabled: true)
 
 All mocks registers can be activate or not on runtime. FireMock provide with a ViewController which list all mocks registers.  
 
-```
+```swift
 FireMock.presentMockRegisters(from: self, backTapped: nil)
 ```
 
