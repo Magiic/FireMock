@@ -1,6 +1,10 @@
 # FireMock
 FireMock help to build mock. If you are looking for an easy way to test your request or work with your server which is not ready so you are in a good place. Test your apps with fake response data and files with a short effort.
 
+[![Build Status](https://travis-ci.org/Magiic/FireMock.svg?branch=master)](https://travis-ci.org/Magiic/FireMock)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/FireMock.svg)](https://img.shields.io/cocoapods/v/FireMock.svg)
+[![Platform](https://img.shields.io/cocoapods/p/FireMock.svg?style=flat)](http://cocoadocs.org/docsets/FireMock)
+
 ## Getting Started
 
 To mock your requests you need to add files contains your structure response data (Json, XML, etc.) and install FireMock via Cocoapods.
