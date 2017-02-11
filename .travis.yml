@@ -1,5 +1,4 @@
 language: objective-c
-xcode_project: FireMock.xcodeproj
-xcode_scheme: FireMock
+
 before_install:
  - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
