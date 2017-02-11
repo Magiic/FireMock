@@ -6,9 +6,9 @@ env:
   - SCHEME=FireMock
   - IOS_SDK=iphonesimulator10.2
   matrix:
-    - DESTINATION="OS=10.1,name=iPhone 7 Plus"     SDK="$IOS_SDK"     POD_LINT="YES"
-    - DESTINATION="OS=9.0,name=iPhone 6"           SDK="$IOS_SDK"     POD_LINT="NO"
-    - DESTINATION="OS=8.1,name=iPhone 4S"          SDK="$IOS_SDK"     POD_LINT="NO"
+    - DESTINATION="OS=10.1,name=iPhone 7" SDK="$IOS_SDK" POD_LINT="YES"
+    - DESTINATION="OS=9.0,name=iPhone 6" SDK="$IOS_SDK" POD_LINT="NO"
+    - DESTINATION="OS=8.4,name=iPhone 5s" SDK="$IOS_SDK" POD_LINT="NO"
 
 before_install:
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
