@@ -1,14 +1,13 @@
 language: objective-c
-osx_image: xcode8.1
+osx_image: xcode8
 env:
   global:
   - PROJECT=FireMock.xcodeproj
-  - SCHEME=FireMock
   - IOS_SDK=iphonesimulator10.1
   matrix:
-    - DESTINATION="OS=10.1,name=iPhone 7" SDK="$IOS_SDK" POD_LINT="YES"
-    - DESTINATION="OS=9.0,name=iPhone 6" SDK="$IOS_SDK" POD_LINT="NO"
-    - DESTINATION="OS=8.4,name=iPhone 5s" SDK="$IOS_SDK" POD_LINT="NO"
+    - DESTINATION="OS=10.1,name=iPhone 7" SCHEME="$IOS_FRAMEWORK_SCHEME" SDK="$IOS_SDK" POD_LINT="YES"
+    - DESTINATION="OS=9.0,name=iPhone 6" SCHEME="$IOS_FRAMEWORK_SCHEME" SDK="$IOS_SDK" POD_LINT="NO"
+    - DESTINATION="OS=8.4,name=iPhone 5s" SCHEME="$IOS_FRAMEWORK_SCHEME" SDK="$IOS_SDK" POD_LINT="NO"
 
 before_install:
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
