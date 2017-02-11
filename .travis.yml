@@ -1,22 +1,3 @@
 language: objective-c
-osx_image: xcode8
-env:
-  global:
-  - PROJECT=FireMock.xcodeproj
-  - IOS_SDK=iphonesimulator10.0
-  - IOS_FRAMEWORK_SCHEME="FireMock"
-  matrix:
-    - DESTINATION="OS=10.0,name=iPhone 7" SCHEME="$IOS_FRAMEWORK_SCHEME" SDK="$IOS_SDK" POD_LINT="YES"
-    - DESTINATION="OS=9.0,name=iPhone 6" SCHEME="$IOS_FRAMEWORK_SCHEME" SDK="$IOS_SDK" POD_LINT="NO"
-    - DESTINATION="OS=8.4,name=iPhone 5s" SCHEME="$IOS_FRAMEWORK_SCHEME" SDK="$IOS_SDK" POD_LINT="NO"
-
 before_install:
-  - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
-script:
-  - set -o pipefail
-  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty
-
-  # Run `pod lib lint` if specified
-  - if [ $POD_LINT == "YES" ]; then
-      pod lib lint;
-    fi
+ - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
