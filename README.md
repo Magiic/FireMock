@@ -36,6 +36,8 @@ FireMock.enabled(true)
 
 ### Implement FireMockProtocol
 
+For each request you can associate a mock that will be used to return the desired response. Creating a mock is very simple. Implement the FireMockProtocol protocol and define its characteristics. All are optional except the mockFile function that expects the file to be used when the request is started.
+
 For example if you have a service to fetch news with multiple possible responses :
 
 ```swift
@@ -61,15 +63,20 @@ enum NewsMock: FireMockProtocol {
         switch self {
         case .success:
             return "success.json"
+        case .successEmpty:
+            return "successEmpty.json"
         case .failedParameters:
             return "failedParameters.json"
         }
     }
 }
 ```
-See FireMockProtocol to more information.
+See FireMockProtocol for more information about properties.
 
 ### Register
+
+Last step, register you mock for specific request. Specify for which url it is associated and if it is enabled.
+You can disable during compilation and enable it on runtime. This is described below.
 
 ```swift
 let mock = NewsMock.success
@@ -92,7 +99,7 @@ FireMock.excludeHosts = ["xxx.com"]
 
 ### Debug
 
-Debug information. You can set 2 different level information.
+Debug information about requests intercepted and enable or disable mocks. You can set 2 different levels information.
 
 ```swift
 FireMock.debug(enabled: true)
@@ -100,7 +107,7 @@ FireMock.debug(enabled: true)
 
 ### Enable Mock request on runtime
 
-All mocks registers can be activate or not on runtime. FireMock provide with a ViewController which list all mocks registers.  
+All mocks registers can be enable or not on runtime. FireMock provide a ViewController that list all mocks registers by you. So it becomes easy to switch from one state to another without having to change code.
 
 ```swift
 FireMock.presentMockRegisters(from: self, backTapped: nil)
@@ -108,7 +115,7 @@ FireMock.presentMockRegisters(from: self, backTapped: nil)
 
 ## Integrate with Alamofire
 
-If you use Alamofire 3rd Party, you need create a new URLSessionConfiguration and add FireURLProtocol.
+If you use Alamofire 3rd Party, you need create a new URLSessionConfiguration and add FireURLProtocol at first on the list. Then, use SessionManager with configuration juste created instead default provide by Alamofire.
 
 ```swift
 let configuration = URLSessionConfiguration.default
@@ -117,6 +124,8 @@ if FireMock.isEnabled {
 }
 let manager = SessionManager(configuration: configuration)
 ```
+
+If you use another 3rd Party to manage your requests, the process should be substantially the same.
 
 ## License
 
