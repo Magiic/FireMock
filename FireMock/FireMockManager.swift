@@ -135,7 +135,7 @@ public struct FireMock {
     }
 
     /// Specifies if FireMock is enabled for specific URLSessionConfiguration.
-    internal static func isEnabled(forConfiguration config: URLSessionConfiguration) -> Bool {
+    public static func isEnabled(forConfiguration config: URLSessionConfiguration) -> Bool {
         if let protocolClasses = config.protocolClasses, protocolClasses.contains(where: { $0 is FireURLProtocol.Type }) {
             return true
         } else {

@@ -83,6 +83,13 @@ let mock = NewsMock.success
 FireMock.register(mock: mock, httpMethod: .get, forURL: url, enabled: true)
 ```
 
+If you want to be more flexible with url, you can register with a Regular Expression. It useful when you don't know exactly the url.
+
+```swift
+let regex = "https?://foo.com(/\\S*)?"
+FireMock.register(mock: mock, regex: regex, httpMethod: .get, enabled: true)
+```
+
 ### Host Condition
 
 You can use your mock files with specific hosts only. If empty, mock works for all hosts.
