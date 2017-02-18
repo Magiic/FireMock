@@ -118,7 +118,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
                 let queryItems = urlComp.queryItems,
                 params.count == queryItems.count,
                 params == queryItems.map({ $0.name }),
-                configMock.url.absoluteStringWithoutQuery == url.absoluteStringWithoutQuery,
+                configMock.url?.absoluteStringWithoutQuery == url.absoluteStringWithoutQuery,
                 configMock.httpMethod.rawValue == httpMethod {
                 return configMock
             }
@@ -127,7 +127,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
                 let urlComp = urlComponents,
                 urlComp.queryItems == nil,
                 params.count == 0,
-                configMock.url.absoluteString == url.absoluteString,
+                configMock.url?.absoluteString == url.absoluteString,
                 configMock.httpMethod.rawValue == httpMethod {
 
                 return configMock
@@ -141,9 +141,25 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
 
                 return configMock
             }
+            // case : Find if exist with regex.
+            else if
+                let regex = configMock.regex,
+                !(search(regex: regex, in: url.absoluteString).isEmpty),
+                configMock.httpMethod.rawValue == httpMethod {
+                return configMock
+            }
         }
 
         return nil
+    }
+
+    private static func search(regex: String, in str: String) -> [NSTextCheckingResult] {
+        do {
+            let exp = try NSRegularExpression(pattern: regex)
+            return exp.matches(in: str, options: [], range: NSRange(location: 0, length: str.utf16.count))
+        } catch {
+            return []
+        }
     }
 
     internal static func canUseMock(url: URL) -> Bool {

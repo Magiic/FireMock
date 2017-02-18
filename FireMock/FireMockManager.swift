@@ -14,7 +14,8 @@ public struct FireMock {
         var mock: FireMockProtocol
         var httpMethod: MockHTTPMethod
         var enabled: Bool = true
-        var url: URL
+        var url: URL?
+        var regex: String?
     }
 
     /// Mocks added.
@@ -32,23 +33,57 @@ public struct FireMock {
     /// - Parameters:
     ///   - mock: FireMockProtocol contained file mock will be used.
     ///   - url: URL associated to mock.
+    ///   - httpMethod: HTTP Method.
+    ///   - enabled: Specifies if mock is used.
     public static func register<T: FireMockProtocol>(mock: T, forURL url: URL, httpMethod: MockHTTPMethod, enabled: Bool = true) {
 
         // Remove similar mock if existing
         mocks = mocks.filter({ !($0.url == url && $0.httpMethod == httpMethod) })
 
-        let config = ConfigMock(mock: mock, httpMethod: httpMethod, enabled: enabled, url: url)
+        let config = ConfigMock(mock: mock, httpMethod: httpMethod, enabled: enabled, url: url, regex: nil)
         mocks.append(config)
 
         FireMockDebug.debug(message: "Register mock -\(mock.name)- for \(url)", level: .high)
     }
 
+
+    /// Register a FireMockProtocol used for a specific regex when request is fired.
+    /// This method ignore parameters implemented by FireMockProtocol and it will used if no mock associated with url has been found.
+    ///
+    /// - Parameters:
+    ///   - mock: FireMockProtocol contained file mock will be used.
+    ///   - regex: regex used to match with url fired.
+    ///   - httpMethod: HTTP Method.
+    ///   - enabled: Specifies if mock is used.
+    public static func register<T: FireMockProtocol>(mock: T, regex: String, httpMethod: MockHTTPMethod, enabled: Bool = true) {
+
+        // Remove similar mock if existing
+        mocks = mocks.filter({ !($0.regex == regex && $0.httpMethod == httpMethod) })
+
+        let config = ConfigMock(mock: mock, httpMethod: httpMethod, enabled: enabled, url: nil, regex: regex)
+        mocks.append(config)
+
+        FireMockDebug.debug(message: "Register mock -\(mock.name)- for regex \(regex)", level: .high)
+    }
+
     /// Unregister a FireMockProtocol for a specific URL.
     ///
     /// - Parameter url: URL associated to mock.
+    ///   - httpMethod: HTTP Method.
     public static func unregister(forURL url: URL, httpMethod: MockHTTPMethod) {
         mocks = mocks.filter({ !($0.url == url && $0.httpMethod == httpMethod) })
         FireMockDebug.debug(message: "Unregister mock for \(url)", level: .high)
+    }
+
+
+    /// Unregister a FireMockProtocol for a specific regex.
+    ///
+    /// - Parameters:
+    ///   - regex: regex associated to mock
+    ///   - httpMethod: HTTP Method.
+    public static func unregister(regex: String, httpMethod: MockHTTPMethod) {
+        mocks = mocks.filter({ !($0.regex == regex && $0.httpMethod == httpMethod) })
+        FireMockDebug.debug(message: "Unregister mock for regex \(regex)", level: .high)
     }
 
     /// Unregister all mocks.
@@ -58,7 +93,9 @@ public struct FireMock {
     }
 
     internal static func update(configMock: ConfigMock) {
-        mocks = mocks.filter({ !($0.url == configMock.url && $0.httpMethod == configMock.httpMethod) })
+        mocks = mocks.filter({
+            !($0.url == configMock.url && $0.httpMethod == configMock.httpMethod) ||
+                !($0.regex == configMock.regex && $0.httpMethod == configMock.httpMethod) })
         mocks.append(configMock)
         FireMockDebug.debug(message: "Update mock -\(configMock.mock.name)- for \(configMock.url)", level: .high)
     }
