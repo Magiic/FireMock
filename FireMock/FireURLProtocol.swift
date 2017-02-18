@@ -50,10 +50,10 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
     
     public override func startLoading() {
         guard let url = request.url, let httpMethod = request.httpMethod else { return }
+
+        let configurationMock = FireURLProtocol.findMock(url: url, httpMethod: httpMethod)
         
-        if let configMock = FireURLProtocol.findMock(url: url, httpMethod: httpMethod),
-            FireURLProtocol.canUseMock(url: url),
-            configMock.enabled {
+        if let configMock = configurationMock, FireURLProtocol.canUseMock(url: url), configMock.enabled, FireMock.isEnabled {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + configMock.mock.afterTime, execute: {
                 FireMockDebug.debug(message: "File mock returns for \(url) : \(configMock.mock.mockFile())", level: .high)
                 do {
@@ -71,9 +71,9 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
             // Else fired normal Request
             let newRequest: NSMutableURLRequest = NSMutableURLRequest(url: url, cachePolicy: request.cachePolicy, timeoutInterval: request.timeoutInterval)
             
-            let _ = URLProtocol.setProperty(true, forKey: FireURLProtocol.FireURLProtocolKey, in: newRequest)
-            
-            self.dataTask = session.dataTask(with: request)
+            URLProtocol.setProperty(true, forKey: FireURLProtocol.FireURLProtocolKey, in: newRequest)
+
+            self.dataTask = session.dataTask(with: newRequest as URLRequest)
             self.dataTask?.resume()
         }
     }

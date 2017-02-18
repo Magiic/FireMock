@@ -116,6 +116,33 @@ public struct FireMock {
         FireMock.isEnabled = enabled
     }
 
+    /// Enabled FireMock for specific configuration.
+    ///
+    /// - Parameter enabled: Enabled Mock in application.
+    /// - Parameter URL Session configuration where FireMock need to be enable.
+    internal static func enabled(_ enabled: Bool, forConfiguration config: URLSessionConfiguration) {
+        if enabled, let protocolClasses = config.protocolClasses, !(protocolClasses.contains(where: { $0 is FireURLProtocol.Type })) {
+            config.protocolClasses?.insert(FireURLProtocol.self as AnyClass, at: 0)
+        } else if !enabled, config.protocolClasses?.first is FireURLProtocol.Type {
+            config.protocolClasses?.remove(at: 0)
+        }
+
+        FireMock.enabled(enabled)
+
+        let text = enabled ? "FireMock is turn on for configuration \(config)" : "FireMock is turn off for configuration \(config)"
+        FireMockDebug.debug(message: text, level: .low)
+
+    }
+
+    /// Specifies if FireMock is enabled for specific URLSessionConfiguration.
+    internal static func isEnabled(forConfiguration config: URLSessionConfiguration) -> Bool {
+        if let protocolClasses = config.protocolClasses, protocolClasses.contains(where: { $0 is FireURLProtocol.Type }) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     /// Specifies URLSessionConfiguration to use when request if fired.
     public static var sessionConfiguration: URLSessionConfiguration? = nil
 

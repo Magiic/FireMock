@@ -113,19 +113,9 @@ All mocks registers can be enable or not on runtime. FireMock provide a ViewCont
 FireMock.presentMockRegisters(from: self, backTapped: nil)
 ```
 
-## Integrate with Alamofire
+## Integrate with 3rd Party
 
-If you use Alamofire 3rd Party, you need create a new URLSessionConfiguration and add FireURLProtocol at first on the list. Then, use SessionManager with configuration juste created instead default provide by Alamofire.
-
-```swift
-let configuration = URLSessionConfiguration.default
-if FireMock.isEnabled {
-  configuration.protocolClasses?.insert(FireURLProtocol.self as AnyClass, at: 0)
-}
-let manager = SessionManager(configuration: configuration)
-```
-
-If you use another 3rd Party to manage your requests, the process should be substantially the same.
+FireMock handle automatically integration with 3rd Party network when it used URLSession API. FireMock uses Swizzling method to add FireURLProtocol in protocolClasses array from session configuration.
 
 ## License
 
