@@ -20,17 +20,11 @@ private let swizzling: (AnyClass, Selector, Selector) -> Void = { forClass, orig
     method_exchangeImplementations(originalMethod, swizzledMethod)
 }
 
-private var originalDefaultConfiguration: URLSessionConfiguration?
-private var originalEphemeralConfiguration: URLSessionConfiguration?
-
 extension URLSessionConfiguration {
 
     open override class func initialize() {
 
         guard self === URLSessionConfiguration.self else { return }
-
-        originalDefaultConfiguration = self.default
-        originalEphemeralConfiguration = self.ephemeral
 
         let originalDefault = #selector(getter: self.default)
         let swizzledDefault = #selector(getter: swizzled_default)
