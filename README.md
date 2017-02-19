@@ -43,6 +43,7 @@ For example if you have a service to fetch news with multiple possible responses
 ```swift
 enum NewsMock: FireMockProtocol {
     case success
+    case successEmpty
     case failedParameters
 
     public var bundle: Bundle { return Bundle.main }
