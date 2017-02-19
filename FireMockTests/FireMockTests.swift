@@ -124,5 +124,18 @@ class FireMockTests: XCTestCase {
         FireMock.unregisterAll()
         XCTAssertTrue(FireMock.mocks.isEmpty)
     }
+
+    func testUpdateMock() {
+        let urlStr = "https://foo.org/mypath?title=mytitle&content=mycontent"
+        let url = URL(string: urlStr)!
+        FireMock.register(mock: NewsMock.hasParameters, forURL: url, httpMethod: .get)
+        XCTAssertEqual(FireMock.mocks.count, 1)
+        var configMock = FireMock.mocks[0]
+        configMock.enabled = false
+        FireMock.update(configMock: configMock)
+        XCTAssertEqual(FireMock.mocks.count, 1)
+        configMock = FireMock.mocks[0]
+        XCTAssertFalse(configMock.enabled)
+    }
     
 }
