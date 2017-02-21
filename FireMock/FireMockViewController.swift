@@ -29,6 +29,9 @@ public class FireMockViewController: UIViewController {
 
     @IBAction func enabledFireMock(sender: UISwitch) {
         FireMock.enabled(sender.isOn)
+        if let sessionConf = defaultSessionConf {
+            FireMock.enabled(sender.isOn, forConfiguration: sessionConf)
+        }
     }
 
     @IBAction func back(_ sender: Any) {

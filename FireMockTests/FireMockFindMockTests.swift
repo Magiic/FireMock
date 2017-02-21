@@ -126,5 +126,32 @@ class FireMockFindMockTests: XCTestCase {
         configMock = FireURLProtocol.findMock(url: urlPost, httpMethod: MockHTTPMethod.get.rawValue)
         XCTAssertNil(configMock)
     }
+
+    func testRegex() {
+        // Matching
+        var urlStr = "https://foo.org/path1/10/path3?title=mytitle&content=mycontent"
+        var regex = "https?://foo.org/[a-zA-Z0-9\\.-]+/[0-9](/\\S*)?"
+        var url = URL(string: urlStr)!
+        FireMock.register(mock: NewsMock.hasParameters, regex: regex, httpMethod: .get)
+        var configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
+        XCTAssertNotNil(configMock)
+
+        // Path not matching
+        FireMock.unregisterAll()
+        urlStr = "https://foo.org/path1/test/path3?title=mytitle&content=mycontent"
+        url = URL(string: urlStr)!
+        FireMock.register(mock: NewsMock.hasParameters, regex: regex, httpMethod: .get)
+        configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
+        XCTAssertNil(configMock)
+
+        // Method HTTP not matching
+        FireMock.unregisterAll()
+        urlStr = "https://foo.org/path1/10/path3?title=mytitle&content=mycontent"
+        url = URL(string: urlStr)!
+        regex = "https?://foo.org/[a-zA-Z0-9\\.-]+/[0-9](/\\S*)?"
+        FireMock.register(mock: NewsMock.hasParameters, regex: regex, httpMethod: .get)
+        configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.post.rawValue)
+        XCTAssertNil(configMock)
+    }
     
 }
