@@ -69,8 +69,9 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
             })
         } else {
             // Else fired normal Request
-            let newRequest: NSMutableURLRequest = NSMutableURLRequest(url: url, cachePolicy: request.cachePolicy, timeoutInterval: request.timeoutInterval)
-            
+
+            let newRequest = (self.request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
+
             URLProtocol.setProperty(true, forKey: FireURLProtocol.FireURLProtocolKey, in: newRequest)
 
             self.dataTask = session.dataTask(with: newRequest as URLRequest)
