@@ -127,4 +127,4 @@ FireMock handle automatically integration with 3rd Party network when it used UR
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License
