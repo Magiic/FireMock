@@ -44,6 +44,8 @@ class FireMockProtocolTests: XCTestCase {
                 return ["title", "content"]
             }
         }
+
+        var name: String? { return "Fetch News" }
         
     }
     
@@ -124,6 +126,20 @@ class FireMockProtocolTests: XCTestCase {
             }.resume()
 
         waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFireMockProtocol() {
+        let mock = NewsMock.successFill
+        XCTAssertEqual(mock.bundle, Bundle(for: FireMockProtocolTests.self))
+
+        XCTAssertNotNil(mock.headers)
+        XCTAssertEqual(mock.headers!, [
+            "Content-Type": "application/json",
+            "MyKey": "MyValue"
+            ])
+        XCTAssertEqual(mock.httpVersion, "1.1")
+        XCTAssertEqual(mock.statusCode, 200)
+        XCTAssertEqual(mock.name, "Fetch News")
     }
 
     // MARK: - Helper

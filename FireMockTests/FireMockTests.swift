@@ -89,7 +89,7 @@ class FireMockTests: XCTestCase {
 
     func testRegisterRegex() {
         let urlStr = "https://foo.org/path1/10/path3?title=mytitle&content=mycontent"
-        let regex = "https?://foo.org/[a-zA-Z0-9\\.-]+/[0-9](/\\S*)?"
+        var regex = "https?://foo.org/[a-zA-Z0-9\\.-]+/[0-9](/\\S*)?"
         let url = URL(string: urlStr)!
         FireMock.register(mock: NewsMock.hasParameters, regex: regex, httpMethod: .get)
         let configMock = FireURLProtocol.findMock(url: url, httpMethod: MockHTTPMethod.get.rawValue)
@@ -98,6 +98,14 @@ class FireMockTests: XCTestCase {
         // No duplicate
         FireMock.register(mock: NewsMock.hasParameters, regex: regex, httpMethod: .get)
         XCTAssertEqual(FireMock.mocks.count, 1)
+
+        // Multiple regex
+        regex = "https?://fee.org/[a-zA-Z0-9\\.-]+/[0-9](/\\S*)?"
+        FireMock.register(mock: NewsMock.hasParameters, regex: regex, httpMethod: .get)
+        XCTAssertEqual(FireMock.mocks.count, 2)
+
+        FireMock.register(mock: NewsMock.hasParameters, regex: regex, httpMethod: .post)
+        XCTAssertEqual(FireMock.mocks.count, 3)
     }
 
     func testUnRegister() {
@@ -136,6 +144,15 @@ class FireMockTests: XCTestCase {
         XCTAssertEqual(FireMock.mocks.count, 1)
         configMock = FireMock.mocks[0]
         XCTAssertFalse(configMock.enabled)
+    }
+
+    func testMockViewController() {
+        let controller = FireMockViewController(nibName: "FireMockViewController", bundle: Bundle(for: FireMockViewController.self))
+        controller.view.backgroundColor = .white
+        XCTAssertNotNil(controller)
+
+        XCTAssertFalse(FireMock.isEnabled)
+        XCTAssertFalse(controller.enabledFireMock.isOn)
     }
     
 }
