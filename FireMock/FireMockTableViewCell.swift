@@ -24,11 +24,19 @@ class FireMockTableViewCell: UITableViewCell {
     }
 
     func configure(mock: FireMock.ConfigMock) {
+        let name = mock.mocks.reduce("", { $0.0 + " " + ($0.1.name ?? "") })
+
         httpMethod.text = mock.httpMethod.rawValue
-        name.text = mock.mock.name ?? "No Name"
+        self.name.text = name.isEmpty ? "No Name" : name
         url.text = mock.url?.absoluteString ?? mock.regex
         parameters.text = parametersNames(mock: mock)
         enabledSwitch.isOn = mock.enabled
+
+        if mock.mocks.count > 1 {
+            accessoryType = .disclosureIndicator
+        } else {
+            accessoryType = .none
+        }
     }
 
     @IBAction func enabledMock(sender: UISwitch) {
@@ -38,7 +46,7 @@ class FireMockTableViewCell: UITableViewCell {
     // MARK: - Helper
 
     private func parametersNames(mock: FireMock.ConfigMock) -> String {
-        if let params = mock.mock.parameters {
+        if let mockFind = mock.mocks.first, let params = mockFind.parameters {
             return params.joined(separator: "/")
         }
 

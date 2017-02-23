@@ -29,7 +29,7 @@ public protocol FireMockProtocol {
 
     /// Specifies name mock. Appear in view list mock.
     var name: String? { get }
-    
+
     /// Specifies the name of mock file used.
     func mockFile() -> String
     

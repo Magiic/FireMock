@@ -11,7 +11,7 @@ import Foundation
 public struct FireMock {
 
     public struct ConfigMock {
-        var mock: FireMockProtocol
+        var mocks: [FireMockProtocol]
         var httpMethod: MockHTTPMethod
         var enabled: Bool = true
         var url: URL?
@@ -31,19 +31,25 @@ public struct FireMock {
     /// Register a FireMockProtocol used for a specific URL when request is fired.
     ///
     /// - Parameters:
-    ///   - mock: FireMockProtocol contained file mock will be used.
+    ///   - mock: FireMockProtocol variadic parameter takes 1 or more mock contained file mock will be used.
     ///   - url: URL associated to mock.
     ///   - httpMethod: HTTP Method.
     ///   - enabled: Specifies if mock is used.
-    public static func register<T: FireMockProtocol>(mock: T, forURL url: URL, httpMethod: MockHTTPMethod, enabled: Bool = true) {
+    public static func register<T: FireMockProtocol>(mock: T..., forURL url: URL, httpMethod: MockHTTPMethod, enabled: Bool = true) {
+
+        if mock.isEmpty {
+            FireMockDebug.debug(message: "Register with an empty mock for \(url)", level: .high)
+            return
+        }
 
         // Remove similar mock if existing
         mocks = mocks.filter({ !($0.url == url && $0.httpMethod == httpMethod) })
 
-        let config = ConfigMock(mock: mock, httpMethod: httpMethod, enabled: enabled, url: url, regex: nil)
+        let config = ConfigMock(mocks: mock, httpMethod: httpMethod, enabled: enabled, url: url, regex: nil)
         mocks.append(config)
 
-        FireMockDebug.debug(message: "Register mock -\(mock.name)- for \(url)", level: .high)
+        let names = mock.reduce("", { $0.0 + " " + ($0.1.name ?? "") })
+        FireMockDebug.debug(message: "Register mock -\(names)- for \(url)", level: .high)
     }
 
 
@@ -51,19 +57,25 @@ public struct FireMock {
     /// This method ignore parameters implemented by FireMockProtocol and it will used if no mock associated with url has been found.
     ///
     /// - Parameters:
-    ///   - mock: FireMockProtocol contained file mock will be used.
+    ///   - mock: FireMockProtocol variadic parameter takes 1 or more mock contained file mock will be used.
     ///   - regex: regex used to match with url fired.
     ///   - httpMethod: HTTP Method.
     ///   - enabled: Specifies if mock is used.
-    public static func register<T: FireMockProtocol>(mock: T, regex: String, httpMethod: MockHTTPMethod, enabled: Bool = true) {
+    public static func register<T: FireMockProtocol>(mock: T..., regex: String, httpMethod: MockHTTPMethod, enabled: Bool = true) {
+
+        if mock.isEmpty {
+            FireMockDebug.debug(message: "Register with an empty mock for \(regex)", level: .high)
+            return
+        }
 
         // Remove similar mock if existing
         mocks = mocks.filter({ !($0.regex == regex && $0.httpMethod == httpMethod) })
-
-        let config = ConfigMock(mock: mock, httpMethod: httpMethod, enabled: enabled, url: nil, regex: regex)
+        
+        let config = ConfigMock(mocks: mock, httpMethod: httpMethod, enabled: enabled, url: nil, regex: regex)
         mocks.append(config)
 
-        FireMockDebug.debug(message: "Register mock -\(mock.name)- for regex \(regex)", level: .high)
+        let names = mock.reduce("", { $0.0 + " " + ($0.1.name ?? "") })
+        FireMockDebug.debug(message: "Register mock -\(names)- for regex \(regex)", level: .high)
     }
 
     /// Unregister a FireMockProtocol for a specific URL.
@@ -97,7 +109,9 @@ public struct FireMock {
             !($0.url == configMock.url && $0.httpMethod == configMock.httpMethod) ||
                 !($0.regex == configMock.regex && $0.httpMethod == configMock.httpMethod) })
         mocks.append(configMock)
-        FireMockDebug.debug(message: "Update mock -\(configMock.mock.name)- for \(configMock.url)", level: .high)
+
+        let names = configMock.mocks.reduce("", { $0.0 + " " + ($0.1.name ?? "") })
+        FireMockDebug.debug(message: "Update mock -\(names)- for \(configMock.url)", level: .high)
     }
 
     /// Enabled FireMock.
@@ -157,7 +171,8 @@ public struct FireMock {
     public static func presentMockRegisters(from: UIViewController, backTapped: ( () -> Void )?) {
         let mockController = FireMockViewController(nibName: "FireMockViewController", bundle: Bundle(for: FireMockViewController.self))
         mockController.backTapped = backTapped
-        from.present(mockController, animated: true, completion: nil)
+        let navController = UINavigationController(rootViewController: mockController)
+        from.present(navController, animated: true, completion: nil)
     }
 
     /// Debug information.
