@@ -53,12 +53,12 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
 
         let configurationMock = FireURLProtocol.findMock(url: url, httpMethod: httpMethod)
         
-        if let configMock = configurationMock, FireURLProtocol.canUseMock(url: url), configMock.enabled, FireMock.isEnabled {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + configMock.mock.afterTime, execute: {
-                FireMockDebug.debug(message: "File mock returns for \(url) : \(configMock.mock.mockFile())", level: .high)
+        if let configMock = configurationMock, FireURLProtocol.canUseMock(url: url), configMock.enabled, FireMock.isEnabled, let mock = configMock.mocks.first {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + mock.afterTime, execute: {
+                FireMockDebug.debug(message: "File mock returns for \(url) : \(mock.mockFile())", level: .high)
                 do {
-                    let data = try configMock.mock.readMockFile()
-                    let response = HTTPURLResponse(url: url, statusCode: configMock.mock.statusCode, httpVersion: configMock.mock.httpVersion, headerFields: configMock.mock.headers)!
+                    let data = try mock.readMockFile()
+                    let response = HTTPURLResponse(url: url, statusCode: mock.statusCode, httpVersion: mock.httpVersion, headerFields: mock.headers)!
                     self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: URLCache.StoragePolicy.notAllowed)
                     self.client?.urlProtocol(self, didLoad: data)
                     self.client?.urlProtocolDidFinishLoading(self)
@@ -112,7 +112,9 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
         let urlComponents = URLComponents(string: url.absoluteString)
 
         for configMock in FireMock.mocks {
-            let params = configMock.mock.parameters ?? []
+            guard let mock = configMock.mocks.first else { continue }
+
+            let params = mock.parameters ?? []
             // Case where urls absolute string are equals and parameters name from protocol are equals with query items from url req.
             if
                 let urlComp = urlComponents,

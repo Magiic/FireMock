@@ -76,19 +76,18 @@ See FireMockProtocol for more information about properties.
 
 ### Register
 
-Last step, register you mock for specific request. Specify for which url it is associated and if it is enabled.
-You can disable during compilation and enable it on runtime. This is described below.
+Last step, register one or more mocks for specific request. Specify for which url it is associated and if it is enabled.
+You can disable during compilation and enable it on runtime. You can also change the mock during runtime. This is described below.
 
 ```swift
-let mock = NewsMock.success
-FireMock.register(mock: mock, httpMethod: .get, forURL: url, enabled: true)
+FireMock.register(mock: NewsMock.success, NewsMock.successEmpty, httpMethod: .get, forURL: url, enabled: true)
 ```
 
 If you want to be more flexible with url, you can register with a Regular Expression. It useful when you don't know exactly the url.
 
 ```swift
 let regex = "https?://foo.com(/\\S*)?"
-FireMock.register(mock: mock, regex: regex, httpMethod: .get, enabled: true)
+FireMock.register(mock: NewsMock.success, NewsMock.successEmpty, NewsMock.failedParameters, regex: regex, httpMethod: .get, enabled: true)
 ```
 
 ### Host Condition
@@ -113,9 +112,9 @@ Debug information about requests intercepted and enable or disable mocks. You ca
 FireMock.debug(enabled: true)
 ```
 
-### Enable Mock request on runtime
+### Enable and Change Mock on runtime
 
-All mocks registers can be enable or not on runtime. FireMock provide a ViewController that list all mocks registers by you. So it becomes easy to switch from one state to another without having to change code.
+All mocks can be enable or not on runtime. FireMock provide a ViewController that list all mocks registers by you. So it becomes easy to switch from one state to another without having to change code. You can also change the mock during runtime if you have registers 2 or more.
 
 ```swift
 FireMock.presentMockRegisters(from: self, backTapped: nil)
@@ -127,4 +126,4 @@ FireMock handle automatically integration with 3rd Party network when it used UR
 
 ## License
 
-This project is licensed under the MIT License
+This project is licensed under the MIT License.

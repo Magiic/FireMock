@@ -12,7 +12,6 @@ public class FireMockViewController: UIViewController {
 
     @IBOutlet weak var enabledFireMock: UISwitch!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var navigationBar: UINavigationBar!
 
     var backTapped: (() -> Void)?
 
@@ -23,8 +22,25 @@ public class FireMockViewController: UIViewController {
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
-        
+        automaticallyAdjustsScrollViewInsets = false
+
         enabledFireMock.isOn = FireMock.isEnabled
+
+        setupNavBar()
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        tableView.reloadData()
+    }
+
+    private func setupNavBar() {
+        self.title = "Mock Registers"
+        let backButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(FireMockViewController.back(_:)))
+        backButtonItem.tintColor = .black
+
+        self.navigationItem.leftBarButtonItem = backButtonItem
     }
 
     @IBAction func enabledFireMock(sender: UISwitch) {
@@ -42,12 +58,6 @@ public class FireMockViewController: UIViewController {
     private func registerXib() {
         let nib = UINib(nibName: "FireMockTableViewCell", bundle: Bundle(for: FireMockTableViewCell.self))
         tableView.register(nib, forCellReuseIdentifier: "FireMockTableViewCell")
-    }
-}
-
-extension FireMockViewController: UINavigationBarDelegate {
-    public func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return .topAttached
     }
 }
 
@@ -70,5 +80,16 @@ extension FireMockViewController: UITableViewDataSource, UITableViewDelegate {
         }
 
         return cell
+    }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let configMock = FireMock.mocks[indexPath.row]
+
+        if configMock.mocks.count > 1 {
+            let mockSelectionController = FireMockSelectionTableViewController(nibName: "FireMockSelectionTableViewController", bundle: Bundle(for: FireMockSelectionTableViewController.self))
+            mockSelectionController.configMock = configMock
+
+            self.navigationController?.pushViewController(mockSelectionController, animated: true)
+        }
     }
 }
