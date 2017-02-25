@@ -4,6 +4,9 @@ With a short code you can set multiple mock and switch from them on runtime with
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/FireMock.svg)](https://img.shields.io/cocoapods/v/FireMock.svg)
 [![Platform](https://img.shields.io/cocoapods/p/FireMock.svg?style=flat)](http://cocoadocs.org/docsets/FireMock)
+[![Build Status](https://travis-ci.org/Magiic/FireMock.svg?branch=master)](https://travis-ci.org/Magiic/FireMock)
+[![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Getting Started
 
@@ -96,13 +99,13 @@ FireMock.register(mock: NewsMock.success, NewsMock.successEmpty, NewsMock.failed
 You can use your mock files with specific hosts only. If empty, mock works for all hosts.
 
 ```swift
-FireMock.onlyHosts = ["xxx.com"]
+FireMock.onlyHosts = ["foo.com"]
 ```
 
 You can exclude hosts.
 
 ```swift
-FireMock.excludeHosts = ["xxx.com"]
+FireMock.excludeHosts = ["foo.com"]
 ```
 
 ### Debug
