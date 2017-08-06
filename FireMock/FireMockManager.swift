@@ -48,7 +48,7 @@ public struct FireMock {
         let config = ConfigMock(mocks: mock, httpMethod: httpMethod, enabled: enabled, url: url, regex: nil)
         mocks.append(config)
 
-        let names = mock.reduce("", { $0.0 + " " + ($0.1.name ?? "") })
+        let names = mock.reduce("", { $0 + " " + ($1.name ?? "") })
         FireMockDebug.debug(message: "Register mock -\(names)- for \(url)", level: .high)
     }
 
@@ -74,7 +74,7 @@ public struct FireMock {
         let config = ConfigMock(mocks: mock, httpMethod: httpMethod, enabled: enabled, url: nil, regex: regex)
         mocks.append(config)
 
-        let names = mock.reduce("", { $0.0 + " " + ($0.1.name ?? "") })
+        let names = mock.reduce("", { $0 + " " + ($1.name ?? "") })
         FireMockDebug.debug(message: "Register mock -\(names)- for regex \(regex)", level: .high)
     }
 
@@ -110,8 +110,8 @@ public struct FireMock {
                 !($0.regex == configMock.regex && $0.httpMethod == configMock.httpMethod) })
         mocks.append(configMock)
 
-        let names = configMock.mocks.reduce("", { $0.0 + " " + ($0.1.name ?? "") })
-        FireMockDebug.debug(message: "Update mock -\(names)- for \(configMock.url)", level: .high)
+        let names = configMock.mocks.reduce("", { $0 + " " + ($1.name ?? "") })
+        FireMockDebug.debug(message: "Update mock -\(names)- for \(String(describing: configMock.url))", level: .high)
     }
 
     /// Enabled FireMock.
