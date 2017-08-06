@@ -30,6 +30,22 @@ pod 'FireMock'
 @import FireMock
 ```
 
+### Swift4 Only
+
+For swift4, you need to add initialization on your AppDelegate.
+
+```swift
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    override init() {
+        super.init()
+        URLSessionConfiguration.classInit
+    }
+
+    //...
+}
+```
+
 ### Enable FireMock
 
 Add this code in your application to enable FireMock.
