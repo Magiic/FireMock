@@ -12,10 +12,12 @@ internal private(set) var defaultSessionConf: URLSessionConfiguration?
 internal private(set) var ephemeralSessionConf: URLSessionConfiguration?
 
 private let swizzling: (AnyClass, Selector, Selector) -> Void = { forClass, originalSelector, swizzledSelector in
-    let originalMethod = class_getClassMethod(forClass, originalSelector)
-    let swizzledMethod = class_getClassMethod(forClass, swizzledSelector)
-    let origImplementation = method_getImplementation(originalMethod!)
-    let newImplementation = method_getImplementation(swizzledMethod!)
+    guard
+        let originalMethod = class_getClassMethod(forClass, originalSelector),
+        let swizzledMethod = class_getClassMethod(forClass, swizzledSelector) else { return }
+
+    let origImplementation = method_getImplementation(originalMethod)
+    let newImplementation = method_getImplementation(swizzledMethod)
 
     method_exchangeImplementations(originalMethod, swizzledMethod)
 }
