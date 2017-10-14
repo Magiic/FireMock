@@ -10,12 +10,16 @@ import Foundation
 
 public struct FireMock {
 
-    public struct ConfigMock {
+	public struct ConfigMock: Equatable {
         var mocks: [FireMockProtocol]
         var httpMethod: MockHTTPMethod
         var enabled: Bool = true
         var url: URL?
         var regex: String?
+		
+		public static func ==(lhs: ConfigMock, rhs: ConfigMock) -> Bool {
+			return lhs.httpMethod == rhs.httpMethod && (lhs.url == rhs.url || lhs.regex == rhs.regex)
+		}
     }
 
     /// Mocks added.
@@ -105,10 +109,13 @@ public struct FireMock {
     }
 
     internal static func update(configMock: ConfigMock) {
-        mocks = mocks.filter({
-            !($0.url == configMock.url && $0.httpMethod == configMock.httpMethod) ||
-                !($0.regex == configMock.regex && $0.httpMethod == configMock.httpMethod) })
-        mocks.append(configMock)
+		
+		if let index = mocks.index(of: configMock) {
+			mocks = mocks.filter({ $0 != configMock })
+			mocks.insert(configMock, at: index)
+		} else {
+			mocks.append(configMock)
+		}
 
         let names = configMock.mocks.reduce("", { $0 + " " + ($1.name ?? "") })
         FireMockDebug.debug(message: "Update mock -\(names)- for \(String(describing: configMock.url))", level: .high)
@@ -181,8 +188,4 @@ public struct FireMock {
         FireMockDebug.level = level
         FireMockDebug.prefix = prefix
     }
-}
-
-func ==(lhs: FireMock.ConfigMock, rhs: FireMock.ConfigMock) -> Bool {
-    return lhs.url == rhs.url && rhs.httpMethod == lhs.httpMethod
 }
