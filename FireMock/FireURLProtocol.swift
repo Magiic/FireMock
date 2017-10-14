@@ -115,42 +115,42 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
             guard let mock = configMock.mocks.first else { continue }
 
             let params = mock.parameters ?? []
-            // Case where urls absolute string are equals and parameters name from protocol are equals with query items from url req.
-            if
-                let urlComp = urlComponents,
-                let queryItems = urlComp.queryItems,
-                params.count == queryItems.count,
-                params == queryItems.map({ $0.name }),
-                configMock.url?.absoluteStringWithoutQuery == url.absoluteStringWithoutQuery,
-                configMock.httpMethod.rawValue == httpMethod {
-                return configMock
-            }
-            // Case where zero parameters exists in two url.
-            else if
-                let urlComp = urlComponents,
-                urlComp.queryItems == nil,
-                params.count == 0,
-                configMock.url?.absoluteString == url.absoluteString,
-                configMock.httpMethod.rawValue == httpMethod {
-
-                return configMock
-            }
-            // case : Url req with params, url mock with params but parameters in protocol is empty.
-            else if
-                let urlComp = urlComponents,
-                let _ = urlComp.queryItems,
-                configMock.url == url,
-                configMock.httpMethod.rawValue == httpMethod {
-
-                return configMock
-            }
-            // case : Find if exist with regex.
-            else if
-                let regex = configMock.regex,
-                !(search(regex: regex, in: url.absoluteString).isEmpty),
-                configMock.httpMethod.rawValue == httpMethod {
-                return configMock
-            }
+			switch configMock.mockType {
+			case .url(url: let configMockURL):
+				// Case where urls absolute string are equals and parameters name from protocol are equals with query items from url req.
+				if
+					let urlComp = urlComponents,
+					let queryItems = urlComp.queryItems,
+					params.count == queryItems.count,
+					params == queryItems.map({ $0.name }),
+					configMockURL.absoluteStringWithoutQuery == url.absoluteStringWithoutQuery,
+					configMock.httpMethod.rawValue == httpMethod {
+					return configMock
+				}
+				// Case where zero parameters exists in two url.
+				else if
+					let urlComp = urlComponents,
+					urlComp.queryItems == nil,
+					params.count == 0,
+					configMockURL.absoluteString == url.absoluteString,
+					configMock.httpMethod.rawValue == httpMethod {
+					return configMock
+				}
+				// case : Url req with params, url mock with params but parameters in protocol is empty.
+				else if
+					let urlComp = urlComponents,
+					let _ = urlComp.queryItems,
+					configMockURL == url,
+					configMock.httpMethod.rawValue == httpMethod {
+					return configMock
+				}
+			case .regex(regex: let configMockRegex):
+				// case : Find if exist with regex.
+				if !(search(regex: configMockRegex, in: url.absoluteString).isEmpty),
+				configMock.httpMethod.rawValue == httpMethod {
+					return configMock
+				}
+			}
         }
 
         return nil
