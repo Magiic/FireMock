@@ -37,7 +37,14 @@ public class FireMockViewController: UIViewController {
 
     private func setupNavBar() {
         self.title = "Mock Registers"
-        let backButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(FireMockViewController.back(_:)))
+		
+		let buttonTitle: String
+		if self.isModal {
+			buttonTitle = "Done"
+		} else {
+			buttonTitle = "Back"
+		}
+        let backButtonItem = UIBarButtonItem(title: buttonTitle, style: .done, target: self, action: #selector(FireMockViewController.back(_:)))
         backButtonItem.tintColor = .black
 
         self.navigationItem.leftBarButtonItem = backButtonItem
@@ -92,4 +99,20 @@ extension FireMockViewController: UITableViewDataSource, UITableViewDelegate {
             self.navigationController?.pushViewController(mockSelectionController, animated: true)
         }
     }
+}
+
+extension UIViewController {
+	var isModal: Bool {
+		if let index = navigationController?.viewControllers.index(of: self), index > 0 {
+			return false
+		} else if presentingViewController != nil {
+			return true
+		} else if navigationController?.presentingViewController?.presentedViewController == navigationController  {
+			return true
+		} else if tabBarController?.presentingViewController is UITabBarController {
+			return true
+		} else {
+			return false
+		}
+	}
 }

@@ -26,7 +26,12 @@ class FireMockTableViewCell: UITableViewCell {
     func configure(mock: FireMock.ConfigMock) {
         httpMethod.text = mock.httpMethod.rawValue
         self.name.text = mock.mocks.first?.name ?? "No Name"
-        url.text = mock.url?.absoluteString ?? mock.regex
+		switch mock.mockType {
+		case .url(url: let mockURL):
+			url.text = mockURL.absoluteString
+		case .regex(regex: let regex):
+			url.text = regex
+		}
         parameters.text = parametersNames(mock: mock)
         enabledSwitch.isOn = mock.enabled
 
@@ -48,16 +53,15 @@ class FireMockTableViewCell: UITableViewCell {
             return params.joined(separator: "/")
         }
 
-        if let url = mock.url {
-            let urlComponents = URLComponents(string: url.absoluteString)
-            if let queryItems = urlComponents?.queryItems {
-                return queryItems.map({ $0.name }).joined(separator: "/")
-            }
-        }
-
-        if let _ = mock.regex {
-            return "Regex used"
-        }
+		switch mock.mockType {
+		case .url(url: let url):
+			let urlComponents = URLComponents(string: url.absoluteString)
+			if let queryItems = urlComponents?.queryItems {
+				return queryItems.map({ $0.name }).joined(separator: "/")
+			}
+		case .regex(regex: _):
+			return "Regex used"
+		}
 
         return "0 parameters"
     }
