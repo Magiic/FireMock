@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,6 +22,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable FireMock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJa-Ah-CEk">
+                    <rect key="frame" x="30" y="84" width="126.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vnb-oY-zFd">
                     <rect key="frame" x="0.0" y="125" width="320" height="443"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -30,12 +37,6 @@
                         <outlet property="delegate" destination="-1" id="ZDE-E9-Z0Z"/>
                     </connections>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable FireMock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJa-Ah-CEk">
-                    <rect key="frame" x="30" y="84" width="126.5" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g1B-Wh-VuT">
                     <rect key="frame" x="181.5" y="79" width="51" height="31"/>
                     <color key="onTintColor" red="0.16090290297877646" green="0.98518797588832485" blue="0.45540980430850303" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -48,14 +49,15 @@
             <constraints>
                 <constraint firstItem="g1B-Wh-VuT" firstAttribute="leading" secondItem="KJa-Ah-CEk" secondAttribute="trailing" constant="25" id="34h-Xy-uxW"/>
                 <constraint firstAttribute="trailing" secondItem="Vnb-oY-zFd" secondAttribute="trailing" id="7Rs-Ij-WfV"/>
+                <constraint firstItem="KJa-Ah-CEk" firstAttribute="top" secondItem="eGL-0O-dLR" secondAttribute="top" constant="20" id="8PE-fs-Pen"/>
                 <constraint firstItem="g1B-Wh-VuT" firstAttribute="centerY" secondItem="KJa-Ah-CEk" secondAttribute="centerY" id="e3a-xW-xXL"/>
-                <constraint firstItem="KJa-Ah-CEk" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="84" id="egb-hy-JWs"/>
                 <constraint firstItem="Vnb-oY-zFd" firstAttribute="top" secondItem="KJa-Ah-CEk" secondAttribute="bottom" constant="20" id="miT-fW-6hO"/>
                 <constraint firstItem="KJa-Ah-CEk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="oKN-uP-t8Z"/>
                 <constraint firstAttribute="bottom" secondItem="Vnb-oY-zFd" secondAttribute="bottom" id="rc5-mj-4BQ"/>
                 <constraint firstItem="Vnb-oY-zFd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="s8k-rh-8td"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <viewLayoutGuide key="safeArea" id="eGL-0O-dLR"/>
         </view>
     </objects>
 </document>
