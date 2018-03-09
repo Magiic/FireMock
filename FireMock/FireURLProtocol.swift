@@ -99,9 +99,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if let err = error {
             self.client?.urlProtocol(self, didFailWithError: err)
-        } else if let response = task.response {
-            self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        }
+        } 
         
         self.client?.urlProtocolDidFinishLoading(self)
     }
