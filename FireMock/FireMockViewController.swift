@@ -29,8 +29,6 @@ public class FireMockViewController: UIViewController {
         super.viewDidLoad()
 
         registerXib()
-        setupDataSource()
-
         automaticallyAdjustsScrollViewInsets = false
         enabledFireMock.isOn = FireMock.isEnabled
 
@@ -40,6 +38,7 @@ public class FireMockViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        setupDataSource()
     }
 
     private func setupDataSource() {
