@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "FireMock"
-  s.version      = "3.0.4"
+  s.version      = "3.0.5"
   s.summary      = "FireMock help to stub HTTP requests. Test your apps with fake response data and files."
   s.description  = "FireMock help to build mock to test your network requests with files (json, xml, etc.). With 2 simple steps, you can enable/disable a specific mock on runtime. Change mock file on runtime with a specific view build for this purpose."
   s.homepage     = "https://github.com/Magiic/FireMock"
