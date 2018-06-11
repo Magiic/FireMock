@@ -120,7 +120,7 @@ public class FireURLProtocol: URLProtocol, URLSessionDataDelegate, URLSessionTas
 					let urlComp = urlComponents,
 					let queryItems = urlComp.queryItems,
 					params.count == queryItems.count,
-					params == queryItems.map({ $0.name }),
+                    params.hasSameElements(as: queryItems.map({ $0.name })),
 					configMockURL.absoluteStringWithoutQuery == url.absoluteStringWithoutQuery,
 					configMock.httpMethod.rawValue == httpMethod {
 					return configMock
@@ -189,5 +189,11 @@ fileprivate extension URL {
             return absoluteString.replacingOccurrences(of: "?" + query, with: "")
         }
         return absoluteString
+    }
+}
+
+fileprivate extension Array where Element: Comparable {
+    func hasSameElements(as other: [Element]) -> Bool {
+        return count == other.count && sorted() == other.sorted()
     }
 }
