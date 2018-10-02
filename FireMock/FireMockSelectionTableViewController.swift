@@ -20,7 +20,7 @@ class FireMockSelectionTableViewController: UITableViewController {
 
         registerXib()
         tableView.estimatedRowHeight = 50
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
     }
 

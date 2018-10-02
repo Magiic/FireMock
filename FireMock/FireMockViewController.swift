@@ -14,9 +14,9 @@ public class FireMockViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.estimatedRowHeight = 80
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
             tableView.estimatedSectionHeaderHeight = 64
-            tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+            tableView.sectionHeaderHeight = UITableView.automaticDimension
             tableView.sectionFooterHeight = 0
         }
     }
