@@ -14,9 +14,9 @@ public class FireMockViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.estimatedRowHeight = 80
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
             tableView.estimatedSectionHeaderHeight = 64
-            tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+            tableView.sectionHeaderHeight = UITableView.automaticDimension
             tableView.sectionFooterHeight = 0
         }
     }
@@ -29,8 +29,6 @@ public class FireMockViewController: UIViewController {
         super.viewDidLoad()
 
         registerXib()
-        setupDataSource()
-
         automaticallyAdjustsScrollViewInsets = false
         enabledFireMock.isOn = FireMock.isEnabled
 
@@ -40,6 +38,7 @@ public class FireMockViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        setupDataSource()
     }
 
     private func setupDataSource() {
