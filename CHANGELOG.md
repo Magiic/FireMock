@@ -14,4 +14,8 @@ Fix issue with interface FireMock when update the selected Mock used.
 
 ## 3.0.7
 
-Fix issue appear when URL request parameters and mock parameters are equal but not on the same order. It results to have no matching between mock and url. This release attempts to fix it. 
+Fix issue appear when URL request parameters and mock parameters are equal but not on the same order. It results to have no matching between mock and url. This release attempts to fix it.
+
+## 3.1
+
+Migration to swift 4.2
