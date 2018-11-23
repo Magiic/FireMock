@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode9.2
+osx_image: xcode10.1
 
 env:
    global:
@@ -7,12 +7,12 @@ env:
 
    - PROJECT="FireMock.xcodeproj"
    - IOS_SCHEME="FireMock"
-   - IOS_SDK=iphonesimulator11.0
+   - IOS_SDK=iphonesimulator12.1
 
    matrix:
-   - DESTINATION="OS=10.0,name=iPhone 8" SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" POD_LINT="YES"
-   - DESTINATION="OS=10.1,name=iPhone X"  SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" POD_LINT="NO"
-   - DESTINATION="OS=10.2,name=iPhone 7" SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" POD_LINT="NO"
+   - DESTINATION="OS=12.1,name=iPhone 8 Plus" SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" POD_LINT="YES"
+   - DESTINATION="OS=12.1,name=iPhone X"  SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" POD_LINT="NO"
+   - DESTINATION="OS=12.1,name=iPhone XS" SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" POD_LINT="NO"
 
 script:
 - set -o pipefail
