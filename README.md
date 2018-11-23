@@ -5,7 +5,7 @@ With a short code you can set multiple mock and switch from them on runtime with
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/FireMock.svg)](https://img.shields.io/cocoapods/v/FireMock.svg)
 [![Platform](https://img.shields.io/cocoapods/p/FireMock.svg?style=flat)](http://cocoadocs.org/docsets/FireMock)
 [![Build Status](https://travis-ci.org/Magiic/FireMock.svg?branch=master)](https://travis-ci.org/Magiic/FireMock)
-[![Swift 4.0](https://img.shields.io/badge/Swift-4.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Getting Started
